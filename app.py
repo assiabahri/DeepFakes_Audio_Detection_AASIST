@@ -64,40 +64,70 @@ if choice is not None:
     st.session_state.choice = choice
 uploaded_file = None
 
-
+uploaded_file = []
 if st.session_state.choice == "Recorded voice":
-   uploaded_file = st.audio_input("Record your voice")
+   recorded_file = st.audio_input("Record your voice")
    if uploaded_file is not None:
+        uploaded_file = [recorded_file]
         st.success("Voice recorded successfully!")
 elif st.session_state.choice == "uploaded audio file":
-    uploaded_file = st.file_uploader("UPLOAD AUDIO FILE", type=["flac","wav"])
+    uploaded_file = st.file_uploader("UPLOAD AUDIO FILE", type=["flac","wav"], accept_multiple_files= True)
     if uploaded_file is not None:
-        st.audio(uploaded_file)
-        st.success("File uploaded with success")
+        for audio in uploaded_file:
+            st.audio(audio)
+        st.success("Files uploaded with success")
 else: 
     st.info("Please select an option to proceed.")        
 
-
+results = []
 if uploaded_file is not None:
     if st.button("Analyser l'audio"):
         with st.spinner("Analyzing audio..."):
+            for audio in uploaded_file:
             # Preprocess and move tensor to device
-            input_tensor = preprocessing(uploaded_file).to(device)
+                input_tensor = preprocessing(audio).to(device)
 
-            # Model inference
-            with torch.no_grad():
-                _, outputs = model(input_tensor)
-                probabilities = torch.softmax(outputs, dim=1)
+                # Model inference
+                with torch.no_grad():
+                    _, outputs = model(input_tensor)
+                    probabilities = torch.softmax(outputs, dim=1)
 
-            spoof_prob = probabilities[0][0].item()
-            bonafide_prob = probabilities[0][1].item()
+                spoof_prob = probabilities[0][0].item()
+                bonafide_prob = probabilities[0][1].item()
 
-        # Render results
-        st.divider()
-        if bonafide_prob > spoof_prob:
-            st.success(f"**Authentic Audio (Bonafide)** — Confidence: {bonafide_prob * 100:.2f}%")
-        else:
-            st.error(f"**Deepfake Audio (Spoof)** — Confidence: {spoof_prob * 100:.2f}%")
+                st.divider()
+                if bonafide_prob > spoof_prob:
+                    label = "Authentic"
+                else:
+                    label = "Spoof"
+
+                results.append({
+                    "file_name": audio.name,
+                    "label": label,
+                    "confidence": max(bonafide_prob, spoof_prob)
+                })
+
+                if bonafide_prob > spoof_prob:
+                    st.success(f"**Authentic Audio (Bonafide)** — Confidence: {bonafide_prob * 100:.2f}%")
+                else:
+                    st.error(f"**Deepfake Audio (Spoof)** — Confidence: {spoof_prob * 100:.2f}%")
+
+            total_count = len(results)
+            authentic_count = sum(1 for r in results if r["label"] == "Authentic")
+            spoof_count = sum(1 for r in results if r["label"] == "Spoof")
+
+            st.subheader("📊 Batch Analytics Summary")
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.metric(label="Total Analyzed", value=total_count)
+
+            with col2:
+                st.metric(label="Authentic (Bonafide)", value=authentic_count)
+
+            with col3:
+                st.metric(label="Deepfake (Spoof)", value=spoof_count)
+
  
 
 
