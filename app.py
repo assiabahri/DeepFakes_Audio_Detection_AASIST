@@ -95,13 +95,9 @@ if uploaded_file is not None:
         # Render results
         st.divider()
         if bonafide_prob > spoof_prob:
-            st.success(
-                f"✅ **Authentic Audio (Bonafide)** — Confidence: {bonafide_prob * 100:.2f}%"
-            )
+            st.success(f"**Authentic Audio (Bonafide)** — Confidence: {bonafide_prob * 100:.2f}%")
         else:
-            st.error(
-                f"⚠️ **Deepfake Audio (Spoof)** — Confidence: {spoof_prob * 100:.2f}%"
-            )
+            st.error(f"**Deepfake Audio (Spoof)** — Confidence: {spoof_prob * 100:.2f}%")
  
 
 
