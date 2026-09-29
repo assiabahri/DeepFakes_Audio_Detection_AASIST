@@ -1,0 +1,127 @@
+.stMainBlockContainer {
+    max-width: 1000px;
+}
+
+.st-key-app-container {
+    background-color: #001c10;
+    padding: 20px;
+    padding-top: 0;
+    border-radius: 15px;
+    border: 1px solid #478C5C;
+    width: 100%;
+    margin: auto;
+}
+
+.st-key-app-container h1 {
+    text-align: left;
+    color: #479499;
+    font-size: 28px;
+    padding-bottom: 3px;
+}
+
+.app-description {
+    font-size: 14px;
+    color: #999999;
+}
+
+.section-title{
+    padding-bottom: 10px;
+}
+
+.bar{
+    color: #479499;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.card {
+    background-color: #013A20;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #478C5C;
+}
+
+.prediction-card {
+    background-color: #1e1e1e;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid #444;
+}
+
+.result-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.authentic {
+    background-color: #BACC81;
+    border-color: #478C5C;
+}
+
+.spoof {
+    background-color: #BA0F30;
+    border-color: #FF2511;
+}
+
+.probabilities {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.probability-item {
+    text-align: center;
+}
+
+.circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle span {
+    background-color: #1e1e1e;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.analytics-card {
+    background-color: #013A20;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #478C5C;
+    text-align: center;
+}
+
+.analytics-card p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.analytics-card h2 {
+    margin: 8px 0 0 0;
+    font-size: 32px;
+}
+
+.authentic-stat {
+    border-color: #478C5C;
+}
+
+.spoof-stat {
+    border-color: #BA0F30;
+}
