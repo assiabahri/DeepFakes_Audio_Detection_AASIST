@@ -1,67 +1,54 @@
-# Détection des deepfakes audio
+# DeepFake Audio Detection - AASIST
 
-Ce dépôt contient le travail réalisé dans le cadre de notre stage sur la **détection des deepfakes audio**.
+## Description
 
-Le projet porte principalement sur l'étude et l'implémentation de méthodes de **détection de spoofing audio**, avec une attention particulière portée à **AASIST (Audio Anti-Spoofing using Integrated Spectro-Temporal Graph Attention Networks)** ainsi qu'à une approche de référence basée sur un **CNN 2D** utilisant des spectrogrammes.
+Ce projet a pour objectif de détecter si un fichier audio est authentique
+(Bonafide) ou généré/manipulé (Spoof / Deepfake).
 
----
+Le projet utilise le modèle AASIST (Audio Anti-Spoofing using Integrated
+Spectro-Temporal Graph Attention Networks), entraîné sur des données
+du dataset ASVspoof 2019 LA.
 
-## Objectifs du projet
-
-Les principaux objectifs du projet sont :
-
-- Comprendre les bases de la détection des deepfakes audio.
-- Comprendre les caractéristiques du signal audio utilisées pour la détection.
-- Étudier le dataset et le protocole **ASVspoof**.
-- Comprendre l'architecture et le fonctionnement d'**AASIST**.
-- Implémenter et analyser les différentes étapes d'AASIST.
-- Développer une approche de référence basée sur un **CNN 2D** appliqué à des spectrogrammes.
-- Évaluer les deux approches avec des métriques adaptées.
-- Comparer leurs performances et leurs caractéristiques.
+Une interface Streamlit permet également de tester le modèle sur des
+fichiers audio.
 
 ---
 
-## 🔍 Problématique
-
-Les deepfakes audio sont des voix artificiellement générées ou manipulées qui peuvent imiter une voix humaine réelle.
-
-Dans le cadre de la détection de spoofing audio, deux types importants d'attaques sont notamment étudiés :
-
-- **Text-to-Speech (TTS)** : génération d'une parole à partir d'un texte.
-- **Voice Conversion (VC)** : transformation d'une voix afin qu'elle ressemble à celle d'un autre locuteur.
-
-L'objectif d'un système d'anti-spoofing audio est de déterminer si un fichier audio correspond à :
-
-- **Bona-fide** : parole réelle et authentique.
-- **Spoof** : parole synthétique ou manipulée.
-
----
-
-## Approches étudiées
-
-### 1. AASIST
-
-**AASIST (Audio Anti-Spoofing using Integrated Spectro-Temporal Graph Attention Networks)** est un modèle d'anti-spoofing audio qui prend directement en entrée la forme d'onde audio.
-
-Le fonctionnement général peut être résumé ainsi :
+## Structure du projet
 
 ```text
-Audio brut
-    ↓
-Sinc-Convolution
-    ↓
-Blocs résiduels
-    ↓
-Représentation des caractéristiques
-    ↓
-Graphes spectral et temporel
-    ↓
-Attention sur graphes
-    ↓
-Max Graph Operation
-    ↓
-Readout
-    ↓
-Classification
-    ↓
-Bona-fide / Spoof
+DeepFakes_Audio_Detection_AASIST/
+│
+├── checkpoints/
+│   └── Modèles entraînés et checkpoints
+│
+├── config/
+│   └── Fichiers de configuration du modèle
+│
+├── docs/
+│   └── Documentation du projet
+│
+├── notebooks/
+│   └── Notebooks utilisés pour l'exploration,
+│       la préparation des données et les expérimentations
+│
+├── src/
+│   └── models/
+│       └── AASIST.py
+│           Implémentation du modèle AASIST
+│
+├── app.py
+│   └── Interface Streamlit pour tester le modèle
+│
+├── style.css
+│   └── Styles CSS de l'interface Streamlit
+│
+├── requirements.txt
+│   └── Dépendances Python du projet
+│
+├── .gitignore
+│   └── Fichiers et dossiers exclus de Git
+│
+└── README.md
+    └── Documentation principale du projet
+```
